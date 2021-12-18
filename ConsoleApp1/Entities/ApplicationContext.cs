@@ -7,7 +7,7 @@ namespace ConsoleApp1.Entities
     {
         public DbSet<Animal> Animals { get; set; }
         
-        private string _connectionString = "server=localhost; database=sys; user=root; password=newpassword";
+        private string _connectionString = "server=localhost; database=localhost; user=root; password=insert_password";
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

@@ -64,7 +64,7 @@ namespace ConsoleApp1.Controllers
                 animalIdto);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPut("{id}")]
         public IActionResult UpdateAnimal([FromBody] Animal animal, int id)
         {
             Animal updatedAnimal = _repo.UpdateAnimal(animal, id);
