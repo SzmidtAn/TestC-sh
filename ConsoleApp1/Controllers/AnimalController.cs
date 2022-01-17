@@ -30,7 +30,6 @@ namespace ConsoleApp1.Controllers
             var animals2 = animals.Select(v => new AnimalIDTO
                 {
                     Id = v.Id,
-                    Type = v.Type,
                     Name = v.Name,
                 })
                 .OrderBy(x => x.Name)
@@ -42,7 +41,7 @@ namespace ConsoleApp1.Controllers
         [HttpGet("{id}")]
         public IActionResult GetAnimalByID(int id)
         {
-            Animal animal = _repo.GetByID(id);
+            Animal animal = _repo.GetById(id);
             if (animal is null) 
             {
                 return NotFound("Could not find animal with ID " + id);
@@ -64,7 +63,7 @@ namespace ConsoleApp1.Controllers
                 animalIdto);
         }
 
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public IActionResult UpdateAnimal([FromBody] Animal animal, int id)
         {
             Animal updatedAnimal = _repo.UpdateAnimal(animal, id);
@@ -85,7 +84,6 @@ namespace ConsoleApp1.Controllers
             {
                 Id = animal.Id,
                 Name = animal.Name,
-                Type = animal.Type,
             };
         }
     }

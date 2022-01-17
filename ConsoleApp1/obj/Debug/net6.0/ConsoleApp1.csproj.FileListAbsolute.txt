@@ -70,3 +70,4 @@
 /home/andzia/projects/TestC-sh/ConsoleApp1/obj/Debug/net6.0/ref/ConsoleApp1.dll
 /home/andzia/projects/TestC-sh/ConsoleApp1/obj/Debug/net6.0/ConsoleApp1.pdb
 /home/andzia/projects/TestC-sh/ConsoleApp1/obj/Debug/net6.0/ConsoleApp1.genruntimeconfig.cache
+/home/andzia/projects/TestC-sh/ConsoleApp1/bin/Debug/net6.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll

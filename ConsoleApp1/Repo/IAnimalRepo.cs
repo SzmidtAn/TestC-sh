@@ -8,7 +8,7 @@ namespace ConsoleApp1.Repo
     {
         List<Animal> GetAll();
 
-        Animal GetByID(int id);
+        Animal GetById(int id);
 
         Animal CreateAnimal(CreateAnimalIDTO animal);
 

@@ -1,29 +1,37 @@
-﻿
-using ConsoleApp1.Entities;
+﻿using ConsoleApp1.Entities;
 using ConsoleApp1.Repo;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IAnimalRepo, AnimalRepo>();
-builder.Services.AddDbContext<ApplicationContext>();
+// Add services to the container.
 
-// i startup: serivces.AddDbContext<ApplicationContext>();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
+ string _connectionString = "server=localhost; database=localhost; user=root; password=insert_password";
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    
+    options
+        .UseMySql(
+        _connectionString,
+        ServerVersion.AutoDetect(_connectionString)));
+
+builder.Services.AddScoped<IAnimalRepo, AnimalRepo>();
+
 
 var app = builder.Build();
 
+
+
+
+
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 app.UseHttpsRedirection();
 
@@ -32,5 +40,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-

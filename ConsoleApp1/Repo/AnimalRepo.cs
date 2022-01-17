@@ -7,6 +7,7 @@ using ConsoleApp1.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConsoleApp1.Repo
 {
@@ -26,7 +27,7 @@ namespace ConsoleApp1.Repo
             Animal animal = new Animal();
 
             animal.Name = createAnimalIdto.Name;
-            animal.Type = createAnimalIdto.Type;
+            animal.AnimalTypeID = createAnimalIdto.AnimalTypeID;
 
             _context.Animals.Add(animal);
             _context.SaveChanges();
@@ -36,16 +37,17 @@ namespace ConsoleApp1.Repo
 
         public void DeleteAnimal(int id)
         {
-            _context.Animals.Remove(GetByID(id));
+            _context.Animals.Remove(GetById(id));
             _context.SaveChanges();
         }
 
         public List<Animal> GetAll()
         {
-            return _context.Animals.ToList();
+            
+            return _context.Animals.Include(a => a.AnimalType).ToList();
         }
 
-        public Animal GetByID(int id)
+        public Animal GetById(int id)
         {
             Animal animal = _context.Animals.Find(id);
             return animal;
@@ -56,8 +58,8 @@ namespace ConsoleApp1.Repo
             Animal existingAnimal = _context.Animals.FirstOrDefault(x => x.Id == id);
             if (existingAnimal is not null)
             {
-                existingAnimal.Type = animal.Type;
                 existingAnimal.Name = animal.Name;
+                existingAnimal.AnimalTypeID = animal.AnimalTypeID;
             }
     
             _context.SaveChanges();

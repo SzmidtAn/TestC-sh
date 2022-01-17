@@ -1,20 +1,65 @@
-
 using Microsoft.EntityFrameworkCore;
+
+// dotnet ef migrations add XXX
+
+
 
 namespace ConsoleApp1.Entities
 {
-    public class ApplicationContext: DbContext
+    public class ApplicationContext : DbContext
     {
         public DbSet<Animal> Animals { get; set; }
-        
-        private string _connectionString = "server=localhost; database=localhost; user=root; password=insert_password";
+        public DbSet<AnimalType> AnimalType { get; set; }
 
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        public ApplicationContext(DbContextOptions options) : base(options)
         {
-            options.UseMySql(
-                _connectionString,
-                ServerVersion.AutoDetect(_connectionString));
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AnimalType>().HasData(
+                new AnimalType
+                {
+                    ID=1,
+                    Name="Dog",
+                },
+                new AnimalType
+                {
+                    ID = 2,
+                    Name = "Ostrich",
+                },
+                new AnimalType
+                {
+                    ID = 3,
+                    Name = "Spider",
+                });
+
+            modelBuilder.Entity<Animal>().HasData(
+                new Animal
+                {
+                    Id = 1,
+                    Name = "Adam",
+                    AnimalTypeID = 1,
+                },
+                new Animal
+                {
+                    Id = 2,
+                    Name = "Benke",
+                    AnimalTypeID = 2,
+                },
+                new Animal
+                {
+                    Id = 3,
+                    Name = "Camilla",
+                    AnimalTypeID = 3,
+                },
+                new Animal
+                {
+                    Id = 4,
+                    Name = "Daniela",
+                    AnimalTypeID = 3,
+                });
         }
     }
 }
